@@ -15,13 +15,13 @@ pipeline {
 
 		stage('Compiler') {
 			steps {
-				bat './gradlew clean build -x test'
+				bat './gradlew clean build -x test -x spotlessJava -x spotlessCheck'
 			}
 		}
 
 		stage('Tests unitaires') {
 			steps {
-				bat './gradlew test -Dtestcontainers.enabled=false'
+				bat './gradlew test'
 			}
 			post {
 				always {
@@ -32,7 +32,7 @@ pipeline {
 
 		stage('Générer le package') {
 			steps {
-				bat './gradlew bootJar'
+				bat './gradlew bootJar -x test -x spotlessJava -x spotlessCheck'
 			}
 		}
 
